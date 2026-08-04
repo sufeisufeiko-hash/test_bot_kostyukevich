@@ -7,7 +7,6 @@ from datetime import datetime
  
 import gspread
 from google.oauth2.service_account import Credentials
-from flask import Flask
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
  
@@ -29,7 +28,6 @@ GOOGLE_CREDENTIALS_JSON = """{
   "universe_domain": "googleapis.com"
 }
 """
-PORT = int(os.environ.get("PORT", 10000))
 # -------------------------------------------------------------------
  
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
@@ -37,17 +35,6 @@ EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("email_bot")
  
-# ---------- 1) крошечный веб-сервер, чтобы Render считал сервис "живым" ----------
-web_app = Flask(__name__)
- 
- 
-@web_app.get("/")
-def health():
-    return "Bot is running", 200
- 
- 
-def run_web_server():
-    web_app.run(host="0.0.0.0", port=PORT)
  
  
 # ---------- 2) доступ к Google Sheets ----------
@@ -89,9 +76,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
  
  
 def main():
-    # веб-сервер — в отдельном потоке, бот-поллинг — в основном
-    threading.Thread(target=run_web_server, daemon=True).start()
- 
     app = Application.builder().token(TELEGRAM_TOKEN).build()
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     log.info("Bot started, polling...")
