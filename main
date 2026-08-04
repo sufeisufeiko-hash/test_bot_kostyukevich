@@ -15,7 +15,7 @@ from telegram.ext import Application, MessageHandler, ContextTypes, filters
 TELEGRAM_TOKEN = "8968331217:AAHNqa30L8iykEVZH3NiHwRIjFuxi_l2dU0"
 SPREADSHEET_ID = "1MY4lsVeCW0_v8rFWMobqxf8Ud0A6AisG0inlrAp_peo"
 SHEET_NAME = "Задача 2"
-GOOGLE_CREDENTIALS_JSON = "{
+GOOGLE_CREDENTIALS_JSON = """{
   "type": "service_account",
   "project_id": "tidy-visitor-504517-b0",
   "private_key_id": "3721f53f0ebd142110edcb5cf9b67366ed2aa5f7",
@@ -28,7 +28,7 @@ GOOGLE_CREDENTIALS_JSON = "{
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sufeisufeiko%40tidy-visitor-504517-b0.iam.gserviceaccount.com",
   "universe_domain": "googleapis.com"
 }
-"
+"""
 PORT = int(os.environ.get("PORT", 10000))
 # -------------------------------------------------------------------
  
