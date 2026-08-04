@@ -57,9 +57,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ws.append_row([email, timestamp, username], value_input_option="USER_ENTERED")
         await update.message.reply_text(f"Готово! {email} добавлен в таблицу (лист «{SHEET_NAME}»).")
         log.info("Added row: %s | %s | %s", email, timestamp, username)
-    except Exception:
+    except Exception as e:
         log.exception("Failed to write to sheet")
-        await update.message.reply_text("Не получилось записать в таблицу. Проверьте настройки доступа.")
+        await update.message.reply_text(f"Ошибка: {e}")
  
  
 def main():
